@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO
+import asyncio
 import requests
 
 app = Flask(__name__)
@@ -15,9 +16,10 @@ def messageReceived(methods=['GET', 'POST']):
 
 @socketio.on('weather')
 def handleWeather(json, methods=['GET', 'POST']):
-    print('weather emit') # console log never hurt anyone
-    
-    socketio.emit('weather', json, handleWeather)
+    res = requests.get('https://www.metaweather.com/api/location/search/?query=north')
+    resJSON = res.json()
+    print(resJSON) # console log never hurt anyone
+    socketio.emit('weather', resJSON, callback=messageReceived)
 
 @socketio.on('my event') #when 'my event' event is returned from the client
 def handle_my_custom_event(json, methods=['GET', 'POST']):

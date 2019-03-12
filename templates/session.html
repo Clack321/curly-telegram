@@ -28,19 +28,21 @@
           e.preventDefault()
           let user_name = $( 'input.username' ).val()
           let user_input = $( 'input.message' ).val()
-            if (user_input === '/weather') {
+          if (user_input === 'weather') {
+            $( 'input.message' ).val( '' ).focus();
             socket.emit( 'weather', {
-              
-          } )
-          $( 'input.message' ).val( '' ).focus()
-            }
-          socket.emit( 'my event', {
-            user_name : user_name,
-            message : user_input
-          } )
-          $( 'input.message' ).val( '' ).focus()
-        } )
-      } )
+              rain : "It's raining!"
+            })
+          } else {
+            $( 'input.message' ).val( '' ).focus();
+            socket.emit( 'my event', {
+              user_name : user_name,
+              message : user_input
+            })
+          }
+          $( 'input.message' ).val( '' ).focus();
+        })
+      
       socket.on( 'my response', function( msg ) {
         console.log( msg )
         if( typeof msg.user_name !== 'undefined' ) {
@@ -49,9 +51,11 @@
         }
       })
       socket.on('weather', function(weatherString) {
+        console.log(weatherString)
           $( 'h3' ).remove()
-          $( 'div.message_holder' ).append('<div><b style="color: #000">' + weatherString + '</div>')
+          $( 'div.message_holder' ).append('<div><b style="color: blue">' + weatherString + '</div>')
       })
+    })
     </script>
 
   </body>
