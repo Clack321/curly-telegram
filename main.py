@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO
+import requests
 
 app = Flask(__name__)
 #app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
@@ -9,12 +10,14 @@ socketio = SocketIO(app) #Veerrryy similar to express, but not quite
 def sessions():
     return render_template('session.html')
 
-# @app.route('/chat2') #http route header ex. localhost:5000/chat2
-# def secondSession():
-#     return "chat2"
-
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
+
+@socketio.on('weather')
+def handleWeather(json, methods=['GET', 'POST']):
+    print('weather emit') # console log never hurt anyone
+    
+    socketio.emit('weather', json, handleWeather)
 
 @socketio.on('my event') #when 'my event' event is returned from the client
 def handle_my_custom_event(json, methods=['GET', 'POST']):

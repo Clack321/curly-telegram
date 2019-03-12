@@ -28,6 +28,12 @@
           e.preventDefault()
           let user_name = $( 'input.username' ).val()
           let user_input = $( 'input.message' ).val()
+            if (user_input === '/weather') {
+            socket.emit( 'weather', {
+              
+          } )
+          $( 'input.message' ).val( '' ).focus()
+            }
           socket.emit( 'my event', {
             user_name : user_name,
             message : user_input
@@ -41,6 +47,10 @@
           $( 'h3' ).remove()
           $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
         }
+      })
+      socket.on('weather', function(weatherString) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append('<div><b style="color: #000">' + weatherString + '</div>')
       })
     </script>
 
