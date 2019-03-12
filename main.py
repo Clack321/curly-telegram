@@ -9,9 +9,9 @@ socketio = SocketIO(app) #Veerrryy similar to express, but not quite
 def sessions():
     return render_template('session.html')
 
-@app.route('/chat2') #http route header ex. localhost:5000/chat2
-def secondSession():
-    return "chat2"
+# @app.route('/chat2') #http route header ex. localhost:5000/chat2
+# def secondSession():
+#     return "chat2"
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
