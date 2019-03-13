@@ -3,13 +3,14 @@
   <html lang="en">
   <head>
     <title>Flask_Chat_App</title>
+    <link rel= "stylesheet"type = "text/css" href = "./chatbox.css" />
   </head>
   <body>
 
     <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
     <div class="message_holder"></div>
 
-    <form action="" method="POST">
+    <form action="" method="POST" id="input-form">
       <input type="text" class="username" placeholder="User Name"/>
       <input type="text" class="message" placeholder="Messages"/>
       <input type="submit"/>
@@ -28,7 +29,16 @@
           e.preventDefault()
           let user_name = $( 'input.username' ).val()
           let user_input = $( 'input.message' ).val()
-          if (user_input === 'weather') {
+          if (user_name === undefined) {
+            user_name = 'guest'
+          }
+          if (user_input[0] == '/') {
+            console.log($( 'input.message' ).val( '' ).focus())
+            socket.emit( 'color', {
+              user_name : user_name,
+              message : user_input
+            })
+          } else if (user_input === 'weather') {
             $( 'input.message' ).val( '' ).focus();
             socket.emit( 'weather', {
               rain : "It's raining!"
@@ -40,20 +50,36 @@
               message : user_input
             })
           }
-          $( 'input.message' ).val( '' ).focus();
+          // $( 'input.message' ).val( '' ).focus();
         })
       
       socket.on( 'my response', function( msg ) {
-        console.log( msg )
+        console.log('My Response ' + msg.message )
         if( typeof msg.user_name !== 'undefined' ) {
           $( 'h3' ).remove()
-          $( 'div.message_holder' ).append( '<div><b style="color: #000">'+msg.user_name+'</b> '+msg.message+'</div>' )
+          $( 'div.message_holder' ).append( '<div><b style="color: red">' + msg.user_name+'</b> ' + msg.message + '</div>' )
         }
       })
-      socket.on('weather', function(weatherString) {
-        console.log(weatherString)
+
+      socket.on( 'colorResponse', function( msg ) {
+        colorSet = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","Darkorange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"]
+         const wordArr = msg.message.split(' ')
+         colorSet.forEach(color => {
+            if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()) {
+           console.log('color response ' + color);
+            $( 'h3' ).remove()
+            console.log(`<div><b>` + msg.user_name + `</b style="color: ${color};"> ` + msg.message + '</div>')
+             $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span> </div>' )
+            }
+         })
+       }) 
+       
+      socket.on('weatherResponse', function(weatherString) {
+        console.log('weather res ' + weatherString)
+        if( typeof msg.user_name !== 'undefined' ) {
           $( 'h3' ).remove()
-          $( 'div.message_holder' ).append('<div><b style="color: blue">' + weatherString + '</div>')
+          $( 'div.message_holder' ).append('<div><b style="color: blue;">' + weatherString + '</div>')
+        }
       })
     })
     </script>
