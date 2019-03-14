@@ -5,12 +5,13 @@ import requests
 
 app = Flask(__name__) #Veerrryy similar to express, but not quite
 #app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
+app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
 socketio = SocketIO(app) #Veerrryy similar to express, but not quite
 
 @app.route('/')
 def sessions():
-    return render_template('session.html')
-
+    # return render_template('session.html')
+    return 'Hello World!'
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
