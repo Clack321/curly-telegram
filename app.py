@@ -6,7 +6,7 @@ import asyncio
 import requests
 
 app = Flask(__name__) #Veerrryy similar to express, but not quite
-#app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
+app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
 # app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
 socketio = SocketIO(app) #Veerrryy similar to express, but not quite
 
