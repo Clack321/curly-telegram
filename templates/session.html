@@ -6,13 +6,15 @@
     <link rel="stylesheet" type="text/css" href="../static/styles/chatbox.css" />
   </head>
   <body>
-    <div class='outerGlowBox'>
-      <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
-      <div class="message_holder"></div>
+    <div id='outer-glow-box'>
+      <div id='text-box'>
+        <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+        <div class="message_holder"></div>
+      </div>
       <form action="" method="POST" id="input-form">
-        <input type="text" class="username" placeholder="User Name"/>
-        <input type="text" class="message" placeholder="Messages"/>
-        <input type="submit"/>
+        <input type="text" class="username" placeholder="User Name e.g David"/>
+        <input type="text" class="message" placeholder="Your Message..."/>
+        <input type="submit" class="submit-button"/>
       </form>
     </div>
 
@@ -20,7 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
     <script type="text/javascript">
-      var socket = io.connect('https://' + document.domain + ':' + location.port);
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
       socket.on( 'connect', function() {
         socket.emit( 'my event', {
           data: 'User Connected'
@@ -69,8 +71,8 @@
               console.log('color response ' + color);
               $( 'h3' ).remove()
               $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + ` : </b> <span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span> </div>' )
-            //} else if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()){
-            //$( 'h3' ).remove()
+            // } else if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()){
+            // $( 'h3' ).remove()
             // $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <b><span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span></b> </div>' )
              }
           })
