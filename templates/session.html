@@ -3,18 +3,18 @@
   <html lang="en">
   <head>
     <title>Flask_Chat_App</title>
-    <link rel="stylesheet" type="text/css" href="./chatbox.css" />
+    <link rel="stylesheet" type="text/css" href="../static/styles/chatbox.css" />
   </head>
   <body>
-
-    <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
-    <div class="message_holder"></div>
-
-    <form action="" method="POST" id="input-form">
-      <input type="text" class="username" placeholder="User Name"/>
-      <input type="text" class="message" placeholder="Messages"/>
-      <input type="submit"/>
-    </form>
+    <div class='outerGlowBox'>
+      <h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+      <div class="message_holder"></div>
+      <form action="" method="POST" id="input-form">
+        <input type="text" class="username" placeholder="User Name"/>
+        <input type="text" class="message" placeholder="Messages"/>
+        <input type="submit"/>
+      </form>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -57,7 +57,7 @@
         console.log('My Response ' + msg.message )
         if( typeof msg.user_name !== 'undefined' ) {
           $( 'h3' ).remove()
-          $( 'div.message_holder' ).append( '<div><b>' + msg.user_name+'</b> ' + msg.message + '</div>' )
+          $( 'div.message_holder' ).append( '<div><b>' + msg.user_name +' : </b> ' + msg.message + '</div>' )
         }
       })
 
@@ -68,7 +68,7 @@
             if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()) {
               console.log('color response ' + color);
               $( 'h3' ).remove()
-              $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span> </div>' )
+              $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + ` : </b> <span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span> </div>' )
             //} else if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()){
             //$( 'h3' ).remove()
             // $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <b><span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span></b> </div>' )

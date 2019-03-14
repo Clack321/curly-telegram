@@ -1,0 +1,24 @@
+body {
+  background: linear-gradient(to bottom, #eab92d 0%,#c79810 10%);
+  color: gold;
+  text-align:center;
+}
+
+.outerGlowBox {
+  box-shadow: 2px 10px 40px 30px rgba(0,0,0,0.75);
+  border: .1px solid gold;
+  margin: auto;
+  width: 600px;
+  background-color: rgb(49, 0, 0);
+  min-height: 450px;
+  position: relative;
+}
+
+.message_holder {
+  text-align: left;
+}
+
+#input-form {
+  position: absolute;
+  bottom: 5px;
+}
