@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
+import eventlet
+import eventlet.wsgi
 import asyncio
 import requests
 
 app = Flask(__name__) #Veerrryy similar to express, but not quite
 #app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
-app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+# app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
 socketio = SocketIO(app) #Veerrryy similar to express, but not quite
 
 @app.route('/')
@@ -33,4 +35,7 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     socketio.emit('my response', json, callback=messageReceived) #emmitting a response to the client from the server, returning mesage was recieved!!!
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    # deploy with eventlet
+    # eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
+    socketio.run(app)
+    # eventlet.wsgi.server(eventlet.listen(('', 8000)), app)
