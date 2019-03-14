@@ -36,6 +36,6 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 if __name__ == '__main__':
     # deploy with eventlet
-    # eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
-    socketio.run(app)
+    eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
+    # socketio.run(app)
     # eventlet.wsgi.server(eventlet.listen(('', 8000)), app)
