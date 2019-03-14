@@ -12,8 +12,8 @@ socketio = SocketIO(app) #Veerrryy similar to express, but not quite
 
 @app.route('/')
 def sessions():
-    # return render_template('session.html')
-    return 'Hello World!'
+    return render_template('session.html')
+    # return 'Hello World!'
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 

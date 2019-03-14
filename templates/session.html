@@ -57,7 +57,7 @@
         console.log('My Response ' + msg.message )
         if( typeof msg.user_name !== 'undefined' ) {
           $( 'h3' ).remove()
-          $( 'div.message_holder' ).append( '<div><b style="color: red">' + msg.user_name+'</b> ' + msg.message + '</div>' )
+          $( 'div.message_holder' ).append( '<div><b>' + msg.user_name+'</b> ' + msg.message + '</div>' )
         }
       })
 
@@ -66,12 +66,14 @@
          const wordArr = msg.message.split(' ')
          colorSet.forEach(color => {
             if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()) {
-           console.log('color response ' + color);
-            $( 'h3' ).remove()
-            console.log(`<div><b>` + msg.user_name + `</b style="color: ${color};"> ` + msg.message + '</div>')
-             $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span> </div>' )
-            }
-         })
+              console.log('color response ' + color);
+              $( 'h3' ).remove()
+              $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span> </div>' )
+            //} else if (wordArr[0].slice(1).toLowerCase() == color.toLowerCase()){
+            //$( 'h3' ).remove()
+            // $( 'div.message_holder' ).append( `<div><b>` + msg.user_name + `</b> <b><span style="color: ${color}">` + msg.message.slice(color.length + 1) + '</span></b> </div>' )
+             }
+          })
        }) 
        
       socket.on('weatherResponse', function(weatherString) {
