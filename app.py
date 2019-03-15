@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO
+import json
 import eventlet
 import eventlet.wsgi
 import asyncio
@@ -18,15 +19,16 @@ def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
 @socketio.on('weather')
-def handleWeather(json, methods=['GET', 'POST']):
-    res = requests.get('https://www.metaweather.com/api/location/search/?query=north')
-    resJSON = res.json()
-    print(resJSON) # console log never hurt anyone
-    socketio.emit('weatherResponse', resJSON, callback=messageReceived)
+def handleWeather(jsonZipCode, methods=['GET', 'POST']):
+    # # res = requests.get('https://www.metaweather.com/api/location/search/?query=north')
+    # # resJSON = res.json()
+    # zipCodeDict = json.load(jsonZipCode) # console log never hurt anyone
+    # zipCode = zipCodeDict.get("zipCode")
+    # socketio.emit('weatherResponse', zipCodeString, callback=messageReceived)
 
-@socketio.on('color')
+@socketio.on('slashCall')
 def handleColor(json, methods=['GET', 'POST']):
-    socketio.emit('colorResponse', json, callback=messageReceived) #emmitting a response to the client from the server, returning mesage was recieved!!!
+    socketio.emit('slashResponse', json, callback=messageReceived) #emmitting a response to the client from the server, returning mesage was recieved!!!
 
 
 @socketio.on('my event') #when 'my event' event is returned from the client
