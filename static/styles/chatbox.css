@@ -16,7 +16,8 @@ body {
   min-height: 492.5px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between
+  justify-content: space-between;
+  max-height: 90vh;
 }
 
 #text-box {
