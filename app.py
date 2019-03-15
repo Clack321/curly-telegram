@@ -24,7 +24,7 @@ def handleWeather(jsonZipCode, methods=['GET', 'POST']):
     # # resJSON = res.json()
     # zipCodeDict = json.load(jsonZipCode) # console log never hurt anyone
     # zipCode = zipCodeDict.get("zipCode")
-    # socketio.emit('weatherResponse', zipCodeString, callback=messageReceived)
+    socketio.emit('weatherResdponse', jsonZipCode, callback=messageReceived)
 
 @socketio.on('slashCall')
 def handleColor(json, methods=['GET', 'POST']):
